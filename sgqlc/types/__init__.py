@@ -2633,7 +2633,13 @@ class Input(ContainerType):
                 except KeyError:  # pragma: no cover
                     continue
 
-            vs = f.type.__to_graphql_input__(v, indent, indent_string)
+            # change begin
+            if v is not None:
+                vs = f.type.__to_graphql_input__(v, indent, indent_string)
+            else:
+                vs = "null"
+            # change end
+
             args.append('%s: %s' % (f.graphql_name, vs))
 
         return '{' + ', '.join(args) + '}'
